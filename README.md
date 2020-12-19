@@ -1,13 +1,12 @@
 # creating-a-react-app-from-scratch
 
-This is a simple react implementation, as seen in [this article](https://blog.usejournal.com/creating-a-react-app-from-scratch-f3c693b84658)
+This is a simple react implementation, as seen in [this article](https://blog.usejournal.com/creating-a-react-app-from-scratch-f3c693b84658). 
+
+It takse the same code and updates to use latest React, babel, webpack dependencies. 
 
 ## Getting Started
 
-_(Note: this project was created in Node v9.3.0)_
-
 Clone this repo and install dependencies with `npm install`.
-
 ### Starting The Dev Server
 
 To start the server and start hacking, run
