@@ -1,3 +1,13 @@
 {
-  "presets": ["@babel/env", "@babel/preset-react"]
+  "presets": [
+    ["@babel/env", { "targets": { "browsers": "last 2 versions" } }],
+    "@babel/preset-typescript",
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose": true }],
+    "@babel/plugin-proposal-object-rest-spread",
+    "react-hot-loader/babel"
+  ]
 }
