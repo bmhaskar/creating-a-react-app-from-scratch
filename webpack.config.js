@@ -62,7 +62,7 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: './public/index.html'
+      template: path.resolve(__dirname, 'public','index.html')
     })
   ]
 };
