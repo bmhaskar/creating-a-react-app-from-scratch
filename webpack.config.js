@@ -1,10 +1,15 @@
 const path = require("path");
 const webpack = require("webpack");
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const mode = process.env.NODE_ENV === "production" ? "production" : "development";
+
 
 module.exports = {
   entry: "./src/index.tsx",
-  mode: "development",
+  mode,
   module: {
     rules: [
       {
@@ -13,35 +18,51 @@ module.exports = {
         loader: "babel-loader",
         options: {
           cacheDirectory: true,
-        }        
+        }
       },
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"]
       },
-      
+
       {
         test: /\.(png|jpg|gif)$/i,
-        dependency: { not: ['url'] }, 
-        type: 'asset/resource'
+        dependency: { not: ["url"] },
+        type: "asset/resource"
       },
     ]
   },
-  resolve: { extensions: ["*", ".js", ".jsx",".ts", ".tsx"] },
+  resolve: { extensions: ["*", ".js", ".jsx", ".ts", ".tsx"] },
   output: {
-    path: path.resolve(__dirname, "dist/"),
-    publicPath: "/dist/",
-    filename: "bundle.js"
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[contenthash].js',
   },
-  devtool:"cheap-module-source-map",
+  devtool: "cheap-module-source-map",
   devServer: {
-    contentBase: path.join(__dirname, "public/"),
+    contentBase: './dist',
     port: 3000,
-    publicPath: "http://localhost:3000/dist/",
-    hotOnly: true
+    hotOnly: true,
+    open: true,
+  },
+  optimization: {
+    moduleIds: 'deterministic',
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(), 
-    new ForkTsCheckerWebpackPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new ForkTsCheckerWebpackPlugin(),
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'public','index.html')
+    })
   ]
 };
